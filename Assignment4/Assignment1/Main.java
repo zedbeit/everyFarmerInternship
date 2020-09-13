@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -21,27 +19,25 @@ import java.util.Scanner;
 public class Main {
     public static void main(String args[]){
         Scanner sc = new Scanner(System.in);
-        List<String> studentId = new ArrayList<>();
-        List<String> studentName = new ArrayList<>();
-        List<String> studentScore = new ArrayList<>();
+        
+        Student student = new Student();        
+        
         String data = "";
 
         System.out.println("Enter the No of records you want to enter: ");
         int records = sc.nextInt();
         
-        for(int i=0; i<records;i++){
+        for(int i=0; i<records; i++){
             System.out.println("Enter student "+(i+1)+" ID: ");
-            studentId.add(sc.next());
+            student.setId(sc.nextInt());
             System.out.println("Enter student "+(i+1)+" name: ");
-            studentName.add(sc.next());
+            student.setName(sc.next());
             System.out.println("Enter student "+(i+1)+" Score: ");
-            studentScore.add(sc.next()); 
+            student.setScore(sc.nextInt());
+            
+            data += data.concat(student.getId()+","+student.getName()+","+student.getScore()+",");
         }
         
-        for(int i=0; i<records; i++){
-            data += studentId.get(i)+","+studentName.get(i)+","+studentScore.get(i)+",";            
-        }
-       
         try {
             File file = new File("student_records.txt");
             Path dataPath = Files.writeString(file.toPath(), data, StandardCharsets.UTF_8);
@@ -50,5 +46,34 @@ public class Main {
         } catch (IOException e) {
             System.out.println("Error!!");
         }  
+    }
+}
+class Student{
+    private int id;
+    private String name;
+    private int score;
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
